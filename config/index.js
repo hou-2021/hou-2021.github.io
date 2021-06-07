@@ -48,8 +48,8 @@ module.exports = {
     /**
      * Source Maps
      */
-
-    productionSourceMap: true,
+    // productionSourceMap 默认情况是true（true代表打包环境是开发环境，可以进行调试；false表示生产环境，正式上线的）
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 
