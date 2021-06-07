@@ -4,20 +4,11 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
-function resolve(dir) {
+function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-const createLintingRule = () => ({
-  test: /\.(js|vue)$/,
-  loader: 'eslint-loader',
-  enforce: 'pre',
-  include: [resolve('src'), resolve('test')],
-  options: {
-    formatter: require('eslint-friendly-formatter'),
-    emitWarning: !config.dev.showEslintErrorsInOverlay
-  }
-})
+
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
@@ -27,25 +18,19 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production' ?
-      config.build.assetsPublicPath : config.dev.assetsPublicPath
+    publicPath: process.env.NODE_ENV === 'production'
+      ? config.build.assetsPublicPath
+      : config.dev.assetsPublicPath
   },
-  // 引用方式
   resolve: {
-    // 能省略后缀文件名
     extensions: ['.js', '.vue', '.json'],
-    // 能给路径起别名
     alias: {
+      'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
-      // 这样引用文件就可以直接 components/....
-      // 不用再写  ../../ 什么的了
-      'components': resolve('src/components'),
-      'assets': resolve('src/assets'),
     }
   },
   module: {
     rules: [
-      ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -80,10 +65,9 @@ module.exports = {
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       },
-      // 配置 scss和less
       {
-        test: / \.scss$ /,
-        loaders: ['style', 'css', 'sass']
+        test: / \.scss$ / ,
+        loaders: [ 'style' , 'css' , 'sass' ]
       },
       {
         test: /\.less$/,
